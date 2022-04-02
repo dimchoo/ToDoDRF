@@ -1,6 +1,0 @@
-Django==3.2.12
-djangorestframework
-django-filter
-psycopg2-binary
-Pillow
-markdown
