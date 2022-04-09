@@ -1,0 +1,30 @@
+[
+    {
+        "username": "vasya_pupkin",
+        "first_name": "Вася",
+        "last_name": "Пупкин",
+        "email": "vasya@pupkin.com",
+        "phone_number": "+792209856743"
+    },
+    {
+        "username": "petya_petukhov",
+        "first_name": "Петя",
+        "last_name": "Петухов",
+        "email": "petukhov@yandex.ru",
+        "phone_number": "+79131234567890"
+    },
+    {
+        "username": "ivan_ivanov",
+        "first_name": "Иван",
+        "last_name": "Иванов",
+        "email": "ivantus@gmail.com",
+        "phone_number": "89161110081"
+    },
+    {
+        "username": "markus",
+        "first_name": "Марк",
+        "last_name": "Усачев",
+        "email": "usach@mail.ru",
+        "phone_number": "89990124385"
+    }
+]
