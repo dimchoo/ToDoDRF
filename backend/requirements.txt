@@ -4,3 +4,4 @@ django-filter
 psycopg2-binary
 Pillow
 markdown
+django-cors-headers
