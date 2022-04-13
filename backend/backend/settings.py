@@ -24,6 +24,7 @@ INSTALLED_APPS = [
 
     # Own Apps:
     'users',
+    'todo',
 ]
 
 MIDDLEWARE = [
