@@ -1,11 +1,21 @@
 from rest_framework.viewsets import ModelViewSet
 from todo.serializers import ProjectSerializer, ProjectUserSerializer, TaskStatusSerializer, TaskSerializer
 from todo.models import Project, ProjectUser, TaskStatus, Task
+from todo.paginators import ProjectPaginator, TaskPaginator
+import django_filters
+from todo.filters import TaskFilter
 
 
 class ProjectViewSet(ModelViewSet):
+    pagination_class = ProjectPaginator
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
+
+    def get_queryset(self):
+        name = self.request.query_params.get('name', None)
+        if name:
+            return Project.objects.filter(name__icontains=name)
+        return Project.objects.all()
 
 
 class ProjectUserViewSet(ModelViewSet):
@@ -19,5 +29,18 @@ class TaskStatusViewSet(ModelViewSet):
 
 
 class TaskViewSet(ModelViewSet):
+    filter_class = TaskFilter
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, )
+    pagination_class = TaskPaginator
     serializer_class = TaskSerializer
-    queryset = Task.objects.all()
+    queryset = Task.objects.filter(is_active=True)
+
+    def get_queryset(self):
+        project_name = self.request.query_params.get('project_name', None)
+        if project_name:
+            return Task.objects.filter(project__name__iexact=project_name)
+        return Task.objects.all()
+
+    def perform_destroy(self, instance):
+        instance.is_active = False
+        instance.save()
