@@ -8,7 +8,7 @@ router = DefaultRouter()
 
 router.register('users', UserViewSet)
 router.register('projects', ProjectViewSet)
-router.register('projects-users', ProjectUserViewSet)
+router.register('project-users', ProjectUserViewSet)
 router.register('task-statuses', TaskStatusViewSet)
 router.register('tasks', TaskViewSet)
 

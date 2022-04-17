@@ -7,7 +7,7 @@ from todo.filters import TaskFilter
 
 
 class ProjectViewSet(ModelViewSet):
-    pagination_class = ProjectPaginator
+    # pagination_class = ProjectPaginator
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
 
@@ -31,7 +31,7 @@ class TaskStatusViewSet(ModelViewSet):
 class TaskViewSet(ModelViewSet):
     filter_class = TaskFilter
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, )
-    pagination_class = TaskPaginator
+    # pagination_class = TaskPaginator
     serializer_class = TaskSerializer
     queryset = Task.objects.filter(is_active=True)
 

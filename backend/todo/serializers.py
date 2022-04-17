@@ -5,8 +5,8 @@ from todo.models import Project, ProjectUser, TaskStatus, Task
 
 
 class ProjectSerializer(ModelSerializer):
-    users = StringRelatedField(many=True)
-    tasks = StringRelatedField(many=True)
+    # users = StringRelatedField(many=True)
+    # tasks = StringRelatedField(many=True)
 
     class Meta:
         model = Project
@@ -14,8 +14,8 @@ class ProjectSerializer(ModelSerializer):
 
 
 class ProjectUserSerializer(ModelSerializer):
-    project = StringRelatedField()
-    user = StringRelatedField()
+    # project = StringRelatedField()
+    # user = StringRelatedField()
 
     class Meta:
         model = ProjectUser
@@ -29,10 +29,9 @@ class TaskStatusSerializer(ModelSerializer):
 
 
 class TaskSerializer(ModelSerializer):
-    project = StringRelatedField()
-    created_by = StringRelatedField()
-    users = ProjectUserSerializer(many=True)
-    status = TaskStatusSerializer()
+    # created_by = StringRelatedField()
+    # users = ProjectUserSerializer(many=True)
+    # status = TaskStatusSerializer()
 
     class Meta:
         model = Task
