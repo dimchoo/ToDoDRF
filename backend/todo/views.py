@@ -2,12 +2,14 @@ from rest_framework.viewsets import ModelViewSet
 from todo.serializers import ProjectSerializer, ProjectUserSerializer, TaskStatusSerializer, TaskSerializer
 from todo.models import Project, ProjectUser, TaskStatus, Task
 from todo.paginators import ProjectPaginator, TaskPaginator
+from todo.permissions import ProjectPermission, TaskPermission
 import django_filters
 from todo.filters import TaskFilter
 
 
 class ProjectViewSet(ModelViewSet):
     # pagination_class = ProjectPaginator
+    # permission_classes = [ProjectPermission, ]
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
 
@@ -29,6 +31,7 @@ class TaskStatusViewSet(ModelViewSet):
 
 
 class TaskViewSet(ModelViewSet):
+    permission_classes = [TaskPermission, ]
     filter_class = TaskFilter
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, )
     # pagination_class = TaskPaginator

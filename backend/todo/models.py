@@ -63,7 +63,7 @@ class Task(models.Model):
         on_delete=models.SET_NULL,
         related_name='created_tasks'
     )
-    users = models.ManyToManyField(ProjectUser, verbose_name='Пользователи')
+    users = models.ManyToManyField(ProjectUser, verbose_name='Пользователи', related_name='tasks', null=True, blank=True)
     status = models.ForeignKey(TaskStatus, verbose_name='Статус', null=True, blank=True, on_delete=models.SET_NULL)
     deadline = models.DateField('Срок', null=True, blank=True)
     color_code = models.CharField('Цвет', max_length=6, null=True, blank=True)
