@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework.authtoken import views
 
 from users.views import UserViewSet
 from todo.views import ProjectViewSet, ProjectUserViewSet, TaskStatusViewSet, TaskViewSet
@@ -18,6 +19,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
+    path('api-auth-token/', views.obtain_auth_token),
     path('api/jwt-token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/jwt-token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
