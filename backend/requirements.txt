@@ -7,3 +7,4 @@ markdown
 django-cors-headers
 ipython
 djangorestframework-simplejwt
+mixer
