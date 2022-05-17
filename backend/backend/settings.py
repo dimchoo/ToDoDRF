@@ -20,6 +20,7 @@ INSTALLED_APPS = [
 
     # Extra Libs:
     'rest_framework',
+    'graphene_django',
     'django_filters',
     'corsheaders',
     'rest_framework.authtoken',
@@ -41,6 +42,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+GRAPHENE = {
+    'SCHEMA': 'todo.schema.schema'
+}
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',

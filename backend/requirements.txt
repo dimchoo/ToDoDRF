@@ -9,3 +9,4 @@ ipython
 djangorestframework-simplejwt
 mixer
 drf-yasg
+graphene-django
