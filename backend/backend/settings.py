@@ -20,6 +20,7 @@ INSTALLED_APPS = [
 
     # Extra Libs:
     'rest_framework',
+    'graphene_django',
     'django_filters',
     'corsheaders',
     'rest_framework.authtoken',
@@ -42,6 +43,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+GRAPHENE = {
+    'SCHEMA': 'todo.schema.schema'
+}
+
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
@@ -52,7 +57,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [BASE_DIR / '..' / 'frontend' / 'build']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -112,6 +117,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [BASE_DIR / '..' / 'frontend' / 'build' / 'static']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
