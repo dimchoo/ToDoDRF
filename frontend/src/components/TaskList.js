@@ -1,4 +1,4 @@
-const TaskItem = ({task}) => {
+const TaskItem = ({task, deleteTask}) => {
     return(
         <tbody>
         <tr>
@@ -10,12 +10,13 @@ const TaskItem = ({task}) => {
             <td>{task.users}</td>
             <td>{task.status}</td>
             <td>{task.deadline}</td>
+            <td><button onClick={ ()=> deleteTask(task.id)}>Delete</button></td>
         </tr>
         </tbody>
     )
 }
 
-const TaskList = ({tasks}) => {
+const TaskList = ({tasks, users, deleteTask}) => {
     return(
         <table>
             <th>ID</th>
@@ -26,7 +27,7 @@ const TaskList = ({tasks}) => {
             <th>Users</th>
             <th>Status</th>
             <th>Deadline</th>
-            {tasks.map((task) => <TaskItem task={task}/>)}
+            {tasks.map((task) => <TaskItem task={task} users={users} deleteTask={deleteTask}/>)}
         </table>
     )
 }
