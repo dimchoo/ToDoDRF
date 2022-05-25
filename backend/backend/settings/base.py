@@ -1,10 +1,9 @@
 from pathlib import Path
 import os
-from backend.secret_settings import PROJECT_SECRET_KEY, PROJECT_DATABASES
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-SECRET_KEY = PROJECT_SECRET_KEY
+SECRET_KEY = 'django-insecure-cj^270874m2qxsh!u__vq^+3#4j3tp=w!t*$wtjr4fe_(7w#)^'
 
 DEBUG = False
 
@@ -20,6 +19,7 @@ INSTALLED_APPS = [
 
     # Extra Libs:
     'rest_framework',
+    'graphene_django',
     'django_filters',
     'corsheaders',
     'rest_framework.authtoken',
@@ -42,7 +42,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+GRAPHENE = {
+    'SCHEMA': 'todo.schema.schema'
+}
+
 CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1',
+    'http://localhost',
     'http://localhost:3000',
     'http://127.0.0.1:3000',
 ]
@@ -52,7 +58,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [BASE_DIR / '..' / 'frontend' / 'build']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -68,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-DATABASES = PROJECT_DATABASES
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -112,6 +117,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [BASE_DIR / '..' / 'frontend' / 'build' / 'static']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -119,10 +125,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.UserDRF'
 
-try:
-    from backend.local_settings import *
-except ImportError:
-    pass
-
-if DEBUG:
-    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'].append('rest_framework.renderers.BrowsableAPIRenderer')

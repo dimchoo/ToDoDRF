@@ -10,12 +10,14 @@ import TaskList from "./components/TaskList";
 import LoginForm from "./components/LoginForm";
 import NotFound from "./components/NotFound";
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom";
+import TaskForm from "./components/TaskForm";
 
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state ={
+            'search': null,
             'users': [],
             'project_users': [],
             'projects': [],
@@ -132,6 +134,42 @@ class App extends React.Component {
                 }
             )
     }
+    createTask(name, project, description, created_by, users) {
+        let headers = this.getHeaders()
+        console.log('headers:', headers)
+        console.log('params:', name, project, description, created_by, users)
+
+        axios
+            .post(`http://127.0.0.1:8000/api/tasks/`,
+                {'name': name, 'project': project, 'description': description, 'created_by': created_by, 'users': users}, {headers}
+            )
+            .then(response => {
+                this.getData()
+            })
+            .catch(
+                error => {
+                    console.log(error)
+                }
+            )
+    }
+
+    deleteTask(id) {
+       let headers = this.getHeaders()
+        axios
+            .delete(`http://127.0.0.1:8000/api/tasks/${id}`, {headers})
+            .then(response => {
+                let tasks = response.data
+                this.setState({
+                    'tasks': this.state.tasks.filter((task) => task.id !== id)
+                })
+            })
+            .catch(
+                error => {
+                    console.log(error)
+                }
+            )
+    }
+
 
     render() {
         return(
@@ -144,6 +182,7 @@ class App extends React.Component {
                             <li><Link to='/projects'>Проекты</Link></li>
                             <li><Link to='/project-users'>Пользователи проектов</Link></li>
                             <li><Link to='/tasks'>Задачи</Link></li>
+                            <li><Link to='/tasks/create'>Создать задачу</Link></li>
                             <li>
                                 { this.isAuth() ? <button onClick={() => this.logOut()}>Logout</button> : <Link to='/login'>Login</Link> }
                             </li>
@@ -156,7 +195,14 @@ class App extends React.Component {
                         <Route exact path='/user/:id' element={<UserDetail users={this.state.users}/>}/>
                         <Route exact path='/projects' element={<ProjectList projects={this.state.projects}/>}/>
                         <Route exact path='/project/:id' element={<ProjectDetail projects={this.state.projects}/>}/>
-                        <Route exact path='/tasks' element={<TaskList tasks={this.state.tasks}/>}/>
+                        {/*<Route exact path='/tasks' element={<TaskList tasks={this.state.tasks}/>}/>*/}
+                        <Route exact path='/tasks' element={<TaskList  tasks={this.state.tasks} users={this.state.users} project_users={this.state.project_users} deleteTask={(id) => this.deleteTask(id)}/>}/>
+                        <Route exact path='/tasks/create' element={<TaskForm
+                            project_users={this.state.project_users}
+                            users={this.state.users}
+                            projects={this.state.projects}
+                            createTask={(name, project, description, created_by, users) =>
+                                this.createTask(name, project, description, created_by, users)}/>}/>
                         <Route exact path='/login' element={
                             <LoginForm obtainAuthToken={(login, password) => this.obtainAuthToken(login, password)}/>}/>
                         <Route exact path='*' element={<NotFound/>}/>

@@ -4,12 +4,14 @@ from todo.models import Project, ProjectUser, TaskStatus, Task
 from todo.paginators import ProjectPaginator, TaskPaginator
 from todo.permissions import ProjectPermission, TaskPermission
 import django_filters
-from todo.filters import TaskFilter
+from todo.filters import TaskFilter, ProjectFilter
 
 
 class ProjectViewSet(ModelViewSet):
     # pagination_class = ProjectPaginator
     # permission_classes = [ProjectPermission, ]
+    filter_class = ProjectFilter
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, )
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
 
@@ -31,7 +33,7 @@ class TaskStatusViewSet(ModelViewSet):
 
 
 class TaskViewSet(ModelViewSet):
-    permission_classes = [TaskPermission, ]
+    # permission_classes = [TaskPermission, ]
     filter_class = TaskFilter
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, )
     # pagination_class = TaskPaginator
@@ -41,8 +43,8 @@ class TaskViewSet(ModelViewSet):
     def get_queryset(self):
         project_name = self.request.query_params.get('project_name', None)
         if project_name:
-            return Task.objects.filter(project__name__iexact=project_name)
-        return Task.objects.all()
+            return Task.objects.filter(project__name__iexact=project_name, is_active=True)
+        return Task.objects.filter(is_active=True)
 
     def perform_destroy(self, instance):
         instance.is_active = False
