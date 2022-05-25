@@ -1,10 +1,9 @@
 from pathlib import Path
 import os
-from backend.secret_settings import PROJECT_SECRET_KEY, PROJECT_DATABASES
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-SECRET_KEY = PROJECT_SECRET_KEY
+SECRET_KEY = 'django-insecure-cj^270874m2qxsh!u__vq^+3#4j3tp=w!t*$wtjr4fe_(7w#)^'
 
 DEBUG = False
 
@@ -48,6 +47,8 @@ GRAPHENE = {
 }
 
 CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1',
+    'http://localhost',
     'http://localhost:3000',
     'http://127.0.0.1:3000',
 ]
@@ -73,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-DATABASES = PROJECT_DATABASES
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -125,10 +125,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.UserDRF'
 
-try:
-    from backend.local_settings import *
-except ImportError:
-    pass
-
-if DEBUG:
-    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'].append('rest_framework.renderers.BrowsableAPIRenderer')
